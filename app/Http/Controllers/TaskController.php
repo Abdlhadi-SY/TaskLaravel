@@ -47,10 +47,12 @@ class TaskController extends Controller
     public function updateTaskDetails(UpdateDetailsRequest $request,Task $task){
         $this->authorize('ownsTask', $task);
         $data=$request->validated();
+        if($data["title"]!=$task->title)
+            $request->validate(["title"=>"unique:tasks"]);
         $task->update([
             "title"=>$data["title"],
             "description"=>$data["description"]
         ]);
-        return response()->json(['message' => 'Task  updated successfully.']);
+        return response()->json(['message' => 'The task has been updated successfully.']);
     }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("title");
             $table->string("description");
-            $table->enum("status",["all","pending","in_progress","done"])->default("pending");
+            $table->enum("status",["pending","in_progress","done"])->default("pending");
             $table->foreignId("user_id")->constrained();
             $table->timestamps();
         });
