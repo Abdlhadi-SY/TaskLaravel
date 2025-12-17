@@ -30,6 +30,7 @@ class TaskController extends Controller
     }
 
     public function addTask(StoreTaskRequest $request){
+
         $data=$request->validated();
         $this->taskService->addTask($data,$request->user()->id);
         return response()->json([
@@ -54,5 +55,10 @@ class TaskController extends Controller
             "description"=>$data["description"]
         ]);
         return response()->json(['message' => 'The task has been updated successfully.']);
+    }
+
+    public function deleteTask(Task $task){
+        $this->authorize('ownsTask', $task);
+        $task->delete();
     }
 }
